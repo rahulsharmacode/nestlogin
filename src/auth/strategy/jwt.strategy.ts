@@ -1,5 +1,5 @@
 // auth/jwt.strategy.ts
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy, ExtractJwt } from 'passport-jwt';
 import { AuthService } from '../auth.service';
@@ -15,7 +15,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any): Promise<any> {
+    if(!payload){
+      throw new HttpException('Token missing' , HttpStatus.UNAUTHORIZED)
+    }
     console.log(payload , 'payload')
-    // return await this.authService.validateUserById(payload.id);
+    return await this.authService.tokenValid(payload.id);
   }
 }

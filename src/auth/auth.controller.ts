@@ -16,8 +16,6 @@ export class AuthController {
     @Get('')
     @UseGuards(AuthGuard())
     async getController(){
-
         return 'ok access'
-        
     }
 }

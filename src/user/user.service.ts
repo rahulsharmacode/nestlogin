@@ -33,6 +33,18 @@ export class UserService {
     }
 
 
+    
+    async findId(data:any) {
+        try{
+            console.log(data , 'add')
+            let findData = await this.userModel.findById({_id:data});
+            return findData
+        }
+        catch(err){
+            throw new HttpException(err , HttpStatus.INTERNAL_SERVER_ERROR)
+        }
+    }
+
     async createOne(data: User)  {
         try{
             let findData = await this.userModel.findOne({email : data.email});
